@@ -68,4 +68,16 @@ public interface IconTheme {
     ImageIcon getRIcon();
     
     ImageIcon getSelectIcon();
+    
+    ImageIcon getCopyIcon();
+    
+    ImageIcon getHideIcon();
+    
+    ImageIcon getWrapIcon();
+    
+    ImageIcon getBoldIcon();
+    
+    ImageIcon getItalicIcon();
+    
+    ImageIcon getUnderlineIcon();
 }

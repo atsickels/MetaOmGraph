@@ -706,6 +706,90 @@ public class MetaOmTablePanel extends JPanel implements ActionListener, ListSele
 		sorter.setTableHeader(listDisplay.getTableHeader());
 
 		geneListDisplayPane = new JScrollPane(listDisplay);
+		
+		JTable rowTable = new RowNumberTable(listDisplay);
+		geneListDisplayPane.setRowHeaderView(rowTable);
+		geneListDisplayPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
+		    rowTable.getTableHeader());
+		
+		JPanel tableHolder = new JPanel();
+		tableHolder.setLayout(new BoxLayout(tableHolder, BoxLayout.Y_AXIS));
+
+		JToolBar tableToolBar = new JToolBar();
+         
+		
+        JPopupMenu copyPopup=new JPopupMenu(); 
+        MenuButton copyMenuButton = new MenuButton("Copy", theme.getCopyIcon(), copyPopup);
+        copyMenuButton.setMenu(copyPopup);
+        
+        JPopupMenu hidePopup=new JPopupMenu(); 
+        MenuButton hideMenuButton = new MenuButton("Hide", theme.getHideIcon(), hidePopup);
+        hideMenuButton.setMenu(hidePopup);
+        
+        hideMenuButton.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseExited(MouseEvent e) {}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MetaOmGraph.getActiveTablePanel().getStripedTable().openColumnSelectorDialog("Feature Metadata");
+			}
+		});
+        
+        JPopupMenu wrapPopup=new JPopupMenu(); 
+        MenuButton wrapMenuButton = new MenuButton("Wrap", theme.getWrapIcon(), wrapPopup);
+        wrapMenuButton.setMenu(wrapPopup);
+        
+        JPopupMenu boldPopup=new JPopupMenu(); 
+        MenuButton boldMenuButton = new MenuButton("B", boldPopup);
+        boldMenuButton.setMenu(boldPopup);
+        
+        JPopupMenu italicPopup=new JPopupMenu(); 
+        MenuButton italicMenuButton = new MenuButton("I", italicPopup);
+        italicMenuButton.setMenu(italicPopup);
+        
+        JPopupMenu underlinePopup=new JPopupMenu(); 
+        MenuButton underlineMenuButton = new MenuButton("U", underlinePopup);
+        underlineMenuButton.setMenu(underlinePopup);
+        
+        JPopupMenu colorPopup=new JPopupMenu(); 
+        MenuButton colorMenuButton = new MenuButton("", theme.getPalette(), colorPopup);
+        underlineMenuButton.setMenu(colorPopup);
+        
+        
+        
+        
+        
+        
+        tableToolBar.add(copyMenuButton);
+        tableToolBar.add(hideMenuButton);
+        tableToolBar.add(wrapMenuButton);
+        tableToolBar.addSeparator();
+        tableToolBar.add(boldMenuButton);
+        tableToolBar.add(italicMenuButton);
+        tableToolBar.add(underlineMenuButton);
+        tableToolBar.addSeparator();
+        tableToolBar.add(colorMenuButton);
+        
+        
+        tableHolder.add(new JSeparator());
+        tableHolder.add(tableToolBar);
+        tableHolder.add(geneListDisplayPane);
+        
+        
+		
 		JPanel searchPanel = new JPanel(new BorderLayout());
 		searchPanel.add(new JLabel("Filter:"), "Before");
 		filterField = new ClearableTextField();
@@ -750,7 +834,7 @@ public class MetaOmTablePanel extends JPanel implements ActionListener, ListSele
 		dataToolbar.add(advFilterButton);
 		
 		geneListPanel.setMinimumSize(listToolbar.getPreferredSize());
-		listSplitPane = new JSplitPane(1, true, geneListPanel, geneListDisplayPane);
+		listSplitPane = new JSplitPane(1, true, geneListPanel, tableHolder);
 		listSplitPane.setDividerSize(1);
 		listPanel.add(dataToolbar, "First");
 		listPanel.add(listSplitPane, "Center");

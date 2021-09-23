@@ -91,6 +91,10 @@ public class StripedTable extends JTable {
 		}
 
 		this.metadata.setColumnVisibilityMap(columnVisibilityMap);
+		
+		this.setCellSelectionEnabled(true);
+		this.setColumnSelectionAllowed(true);
+		this.setRowSelectionAllowed(true); 
 
 	}
 	

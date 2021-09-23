@@ -37,6 +37,12 @@ public class TangoIconTheme implements IconTheme {
     private ImageIcon rIcon;
     private ImageIcon selectIcon;
     private ImageIcon clusterIcon;
+    private ImageIcon copyIcon;
+    private ImageIcon hideIcon;
+    private ImageIcon wrapIcon;
+    private ImageIcon boldIcon;
+    private ImageIcon italicIcon;
+    private ImageIcon underlineIcon;
     
     private String dir = "/resource/tango/16x16/";
 
@@ -104,7 +110,19 @@ public class TangoIconTheme implements IconTheme {
     
     private String selectIconPath = "/resource/customicon/select16.png";
     
+    private String copyIconPath = "/resource/customicon/copyIcon16.png";
+    
     private final String clusterIconPath = "/resource/customicon/cluster16.png";
+    
+    private String hideIconPath = "/resource/customicon/hide16.png";
+    
+    private String wrapIconPath = "/resource/customicon/wrap16.png";
+    
+    private String boldIconPath = "/resource/customicon/bold16.png";
+    
+    private String italicIconPath = "/resource/customicon/italic16.png";
+    
+    private String underlineIconPath = "/resource/customicon/underline16.png";
     
     public TangoIconTheme() {
     }
@@ -381,6 +399,54 @@ public class TangoIconTheme implements IconTheme {
 			clusterIcon = new ImageIcon(getClass().getResource(clusterIconPath));
 		}
 		return clusterIcon;
+	}
+	
+	@Override
+	public ImageIcon getCopyIcon() {
+		if(copyIcon == null) {
+			copyIcon = new ImageIcon(getClass().getResource(copyIconPath));
+		}
+		return copyIcon;
+	}
+	
+	@Override
+	public ImageIcon getHideIcon() {
+		if(hideIcon == null) {
+			hideIcon = new ImageIcon(getClass().getResource(hideIconPath));
+		}
+		return hideIcon;
+	}
+	
+	@Override
+	public ImageIcon getWrapIcon() {
+		if(wrapIcon == null) {
+			wrapIcon = new ImageIcon(getClass().getResource(wrapIconPath));
+		}
+		return wrapIcon;
+	}
+	
+	@Override
+	public ImageIcon getBoldIcon() {
+		if(boldIcon == null) {
+			boldIcon = new ImageIcon(getClass().getResource(boldIconPath));
+		}
+		return boldIcon;
+	}
+
+	@Override
+	public ImageIcon getItalicIcon() {
+		if(italicIcon == null) {
+			italicIcon = new ImageIcon(getClass().getResource(italicIconPath));
+		}
+		return italicIcon;
+	}
+
+	@Override
+	public ImageIcon getUnderlineIcon() {
+		if(underlineIcon == null) {
+			underlineIcon = new ImageIcon(getClass().getResource(underlineIconPath));
+		}
+		return underlineIcon;
 	}
 	
     public static void main(String[] args) {
