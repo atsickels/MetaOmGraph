@@ -1,87 +1,40 @@
 #CI to test MOG build
 #Contributor Sumanth
-name: Maven CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+# on:
+#   push:
+#     branches: [ master, main ]
+#   pull_request:
+#     branches: [ master, main ]
+
+name: Crucible Build CI
+
+on: push
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
-        
-    - name: Cache Maven packages
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2               
-    
-    - name: Downloading l2f-prod-common-all zip file
-      run: curl -O http://www.java2s.com/Code/JarDownload/l2fprod/l2fprod-common-all.jar.zip
-     
-    - name: Extracting jar file
-      run: unzip l2fprod-common-all.jar.zip
-    
-    - name: Installing l2f-prod-common-all dependency
-      if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
-      run: mvn install:install-file -Dfile=l2fprod-common-all.jar -DgroupId=com.l2fprod -DartifactId=l2fprod-common-all -Dversion=0.1 -Dpackaging=jar -DgeneratePom=true
-    
-    - name: Installing l2f-prod-common-all dependency windows
-      if: ${{ matrix.os == 'windows-latest' }}
-      run: mvn install:install-file `-Dfile=l2fprod-common-all.jar `-DgroupId=com.l2fprod `-DartifactId=l2fprod-common-all `-Dversion=0.1 `-Dpackaging=jar `-DgeneratePom=true
-    
-    - name: Installing CustomBrowserLauncher dependency
-      if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
-      run: mvn install:install-file -Dfile=src/lib/CustomBrowserLauncher.jar -DgroupId=edu.iastate.metnet -DartifactId=custombrowserlauncher -Dversion=0.0.1 -Dpackaging=jar -DgeneratePom=true
-      
-    - name: Installing CustomBrowserLauncher dependency windows
-      if: ${{ matrix.os == 'windows-latest'}}
-      run: mvn install:install-file `-Dfile=src/lib/CustomBrowserLauncher.jar `-DgroupId=edu.iastate.metnet `-DartifactId=custombrowserlauncher `-Dversion=0.0.1 `-Dpackaging=jar `-DgeneratePom=true
-    
-    - name: Downloading hierarchical-clustering zip file
-      run: curl -LJO https://github.com/lbehnke/hierarchical-clustering-java/releases/download/v1.2.0/hierarchical-clustering-1.2.0.jar
+      - uses: actions/checkout@v2
+        name: Checkout repository
 
-    - name: Installing hierarchical-clustering dependency
-      if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
-      run: mvn install:install-file -Dfile=hierarchical-clustering-1.2.0.jar -DgroupId=com.apporiented -DartifactId=hierarchical-clustering -Dversion=1.2.0 -Dpackaging=jar -DgeneratePom=true
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
 
-    - name: Installing hierarchical-clustering dependency windows
-      if: ${{ matrix.os == 'windows-latest' }}
-      run: mvn install:install-file `-Dfile=hierarchical-clustering-1.2.0.jar `-DgroupId=com.apporiented `-DartifactId=hierarchical-clustering `-Dversion=1.2.0 `-Dpackaging=jar `-DgeneratePom=true
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2               
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-      
-    - name: Upload Jar - macOS
-      if: ${{ matrix.os == 'macos-latest'}}
-      uses: actions/upload-artifact@v2
-      with:
-        name: 'Artifacts-MacOS'
-        path: /Users/runner/work/MetaOmGraph/MetaOmGraph/target/*.jar
-        
-    - name: Upload Jar - Linux
-      if: ${{ matrix.os == 'ubuntu-latest'}}
-      uses: actions/upload-artifact@v2
-      with:
-        name: 'Artifacts-Linux'
-        path: /home/runner/work/MetaOmGraph/MetaOmGraph/target/*.jar
-    
-    - name: Upload Jar - Windows
-      if: ${{ matrix.os == 'windows-latest'}}
-      uses: actions/upload-artifact@v2
-      with:
-        name: 'Artifacts-Windows'
-        path: D:\a\MetaOmGraph\MetaOmGraph\target\*.jar
+      - name: Run build script
+        run: bash ./scripts/build.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./build/*

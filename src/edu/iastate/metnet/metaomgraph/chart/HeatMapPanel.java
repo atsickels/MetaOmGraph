@@ -111,9 +111,9 @@ public class HeatMapPanel extends JPanel{
 	
 	// Tool tip text
 	private String createToolTipTextString(String dataColName, String value) {
-		String bgColor = "#" + Integer.toHexString(MetaOmGraph.getTableColor1().getRGB()).
+		String bgColor = "#" + Integer.toHexString(MetaOmGraph.getTableColorEven().getRGB()).
 				substring(2);
-		String bgColorAlt = "#" + Integer.toHexString(MetaOmGraph.getTableColor2().getRGB()).
+		String bgColorAlt = "#" + Integer.toHexString(MetaOmGraph.getTableColorOdd().getRGB()).
 				substring(2);
 		String[] rowColors = { bgColor, bgColorAlt };
 		String text = "<html><head> " + "<style>" + ".scrollit {\n" + "    overflow:scroll;\n" + "    height:100px;\n"

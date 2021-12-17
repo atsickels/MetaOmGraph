@@ -78,7 +78,7 @@ public class WelcomePanel extends JPanel {
         newPanel
                 .add(
                         new WelcomeHeader(
-                                "Create a New Project",
+                                "New Project",
                                 ImageIO
                                         .read(this
                                                 .getClass()
@@ -228,7 +228,7 @@ public class WelcomePanel extends JPanel {
         helpPanel.setLayout(new GridBagLayout());
         c2.gridy = 0;
         c2.insets = new Insets(0, 0, 0, 0);
-        helpPanel.add(new WelcomeHeader("Get Information", ImageIO.read(this
+        helpPanel.add(new WelcomeHeader("Information", ImageIO.read(this
                 .getClass().getResourceAsStream(
                         "/resource/tango/32x32/apps/help-browser.png"))), c2);
         c2.insets = new Insets(0, 10, 0, 0);
@@ -287,7 +287,7 @@ public class WelcomePanel extends JPanel {
         newPanel
                 .add(
                         new WelcomeHeader(
-                                "Create a New Project",
+                                "New Project",
                                 ImageIO
                                         .read(this
                                                 .getClass()

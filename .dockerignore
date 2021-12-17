@@ -1,0 +1,19 @@
+# Ignoring git and cache folders
+.git
+.cache
+bin
+doc
+images
+launch-app.sh
+LICENSE
+manual
+MOG_SupportingData
+releasenotes.txt
+rscripts
+wbp-meta
+
+# Ignore artifacts
+**/*.class
+**/*.war
+**/*.md
+**/*.txt
