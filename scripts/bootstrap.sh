@@ -40,7 +40,7 @@ shopt -s globstar
 if [[ $BUILD_MODE > $MODE_MIN ]]; then
 	JAVA_VERSION=$(java --version | head -n1 | awk -F '[^0-9]*' '$0=$2')
 	if [[ -z ${OJAVA_VERSION+z} && ${JAVA_VERSION} < 11 ]]; then
-		error "Using $(link_man $(which java)) (JDK ${JAVA_VERSION}); build requires ${BOLD}JDK 17${NORMAL} or higher.";
+		error "Using $(link_man $(which java)) (JDK ${JAVA_VERSION}); build requires ${BOLD}JDK 11${NORMAL} or higher.";
 		exit 1;
 	fi
 fi

@@ -302,7 +302,7 @@
     <dependency>
         <groupId>org.renjin.cran</groupId>
         <artifactId>lattice</artifactId>
-        <version>0.20-35-b64</version>
+        <version>0.20-38-b16</version>
     </dependency>
     <dependency>
         <groupId>org.renjin.cran</groupId>

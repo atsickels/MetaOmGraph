@@ -79,10 +79,12 @@ public class ComputeLimma {
         engine.eval("snames <- colnames(counts)");
         engine.put("groups", rGroups.build());
         engine.eval("group2 <- interaction(groups[2,])");
+        engine.eval("png()");
         String mdsPath = "png(\"" + homePath + "/metaomgraph/mds.png\")";
-//            engine.eval(mdsPath);
-//            engine.eval("plotMDS(d, col = as.numeric(group))");
-//            engine.eval("dev.off()");
+        engine.eval(mdsPath);
+        mdsPlot(factory, engine);
+        engine.eval("plotMDSv2(d, col = as.numeric(group2))");
+        engine.eval("dev.off()");
 
         // PERFORMING THE LIMMA VOOM OPERATION
         String voomPath = "png(\"" + homePath + "/metaomgraph/voom.png\")";
@@ -115,12 +117,7 @@ public class ComputeLimma {
 //            DoubleVector adjPVal = (DoubleVector)engine.eval("top.table$adj.P.Val");
     }
 
-    private void mdsPlot() throws ScriptException {
-        // create a script engine manager:
-        RenjinScriptEngineFactory factory = new RenjinScriptEngineFactory();
-        // create a Renjin engine:
-        ScriptEngine engine = factory.getScriptEngine();
-
+    private void mdsPlot(RenjinScriptEngineFactory factory, ScriptEngine engine) throws ScriptException {
         engine.eval("#  File src/library/stats/R/cmdscale.R\n" +
                 "#  Part of the R package, https://www.R-project.org\n" +
                 "#\n" +
@@ -219,9 +216,9 @@ public class ComputeLimma {
                 "\tprint(unclass(object))\n" +
                 "})\n" +
                 "\n" +
-                "plotMDS <- function(x,...) UseMethod(\"plotMDS\")\n" +
+                "plotMDSv2 <- function(x,...) UseMethod(\"plotMDSv2\")\n" +
                 "\n" +
-                "plotMDS.MDS <- function(x,labels=NULL,pch=NULL,cex=1,dim.plot=NULL,xlab=NULL,ylab=NULL,...)\n" +
+                "plotMDSv2.MDS <- function(x,labels=NULL,pch=NULL,cex=1,dim.plot=NULL,xlab=NULL,ylab=NULL,...)\n" +
                 "#\tMethod for MDS objects\n" +
                 "#\tCreate a new plot using MDS coordinates or distances previously created\n" +
                 "#\tGordon Smyth and Yifang Hu\n" +
@@ -269,7 +266,7 @@ public class ComputeLimma {
                 "\tinvisible(x)\n" +
                 "}\n" +
                 "\n" +
-                "plotMDS.default <- function(x,top=500,labels=NULL,pch=NULL,cex=1,dim.plot=c(1,2),ndim=max(dim.plot),gene.selection=\"pairwise\",xlab=NULL,ylab=NULL,plot=TRUE,...)\n" +
+                "plotMDSv2.default <- function(x,top=500,labels=NULL,pch=NULL,cex=1,dim.plot=c(1,2),ndim=max(dim.plot),gene.selection=\"pairwise\",xlab=NULL,ylab=NULL,plot=TRUE,...)\n" +
                 "#\tMulti-dimensional scaling with top-distance\n" +
                 "#\tDi Wu and Gordon Smyth\n" +
                 "#\t19 March 2009.  Last modified 6 Oct 2016\n" +
@@ -328,7 +325,7 @@ public class ComputeLimma {
                 "\t}\n" +
                 "\n" +
                 "#\tMulti-dimensional scaling\n" +
-                "\ta1 <- suppressWarnings(cmdscale(as.dist(dd),k=ndim))\n" +
+                "\ta1 <- suppressWarnings(cmdscalev2(as.dist(dd),k=ndim))\n" +
                 "\n" +
                 "#\tMake MDS object and call plotMDS method\n" +
                 "\tmds <- new(\"MDS\",list(dim.plot=dim.plot,distance.matrix=dd,cmdscale.out=a1,top=top,gene.selection=gene.selection))\n" +
@@ -345,7 +342,7 @@ public class ComputeLimma {
                 "\tmds$top <- top\n" +
                 "\tmds$axislabel <- axislabel\n" +
                 "\tif(plot)\n" +
-                "\t\tplotMDS(mds,labels=labels,pch=pch,cex=cex,xlab=xlab,ylab=ylab,...)\n" +
+                "\t\tplotMDSv2(mds,labels=labels,pch=pch,cex=cex,xlab=xlab,ylab=ylab,...)\n" +
                 "\telse\n" +
                 "\t\tmds\n" +
                 "}");

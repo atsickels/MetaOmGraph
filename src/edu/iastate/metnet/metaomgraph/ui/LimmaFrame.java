@@ -175,7 +175,7 @@ public class LimmaFrame extends TaskbarInternalFrame implements ActionListener {
                             limmaGroups.add(group.getId());
                         } else { // if not null that name exists somewhere else immediately cancel
                             JOptionPane.showMessageDialog(null, "The two groups must be disjoint. Please check the lists",
-                            "Please check the lists", JOptionPane.ERROR_MESSAGE);
+                                    "Please check the lists", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
                     }
@@ -201,9 +201,13 @@ public class LimmaFrame extends TaskbarInternalFrame implements ActionListener {
                                 // Start calculating
                                 try {
                                     ob.calc();
-                                    JOptionPane.showMessageDialog(panel, "Limma analysis results saved at " + System.getProperty("user.home") + "/metaomgraph/differentialexpression.tsv");
+                                    JOptionPane.showMessageDialog(panel, "Limma analysis results saved at " + System.getProperty("user.home") + "/metaomgraph/differentialexpression.tsv\n"
+                                            + "MDS plot saved at " + System.getProperty("user.home") + "/metaomgraph/mds.png\"\n"
+                                            + "Voom plot saved at " + System.getProperty("user.home") + "/metaomgraph/voom.png\"\n"
+                                    );
                                     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                                         Desktop.getDesktop().browse(new URI("file://" + System.getProperty("user.home") + "/metaomgraph/voom.png"));
+                                        Desktop.getDesktop().browse(new URI("file://" + System.getProperty("user.home") + "/metaomgraph/mds.png"));
                                     }
                                 } catch (Exception e) {
                                     StringWriter sw = new StringWriter();
